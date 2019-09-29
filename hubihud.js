@@ -1,17 +1,3 @@
-function dispatch() {
-	path = window.location.pathname;
-	switch (true){
-		case /\/logs.*/.test(path):
-			logs();
-			break;
-		case /\/installedapp\/list/.test(path):
-			appList();
-			break;
-		default:
-			break;
-	}
-}
-
 function appList() {
 	sortGroupsAndScenes();
 }
@@ -47,9 +33,6 @@ function sortGroupsAndScenes() {
 	versionsContainer.append(versions);
 }
 
-function isHubitat() {
-	return $('script[src$="hubitat.min.js"]').length > 0;
-}
 
 function logs() {
 	watchLogHeaders();
@@ -65,6 +48,7 @@ function watchLogHeaders() {
 		}
 	});
 }
+
 function sortLogHeaders() {
 	filters = $('#filters');
 	items = sortBy(filters, 'li', 'a');
@@ -79,5 +63,24 @@ function sortBy(parent, childSelector, keySelector) {
 	});
 	return items;
 }
+
+
+routes = [
+	{ pattern: /\/logs.*/, handler: logs },
+	{ pattern: /\/installedapp\/list/, handler: appList }
+]
+
+function dispatch() {
+	path = window.location.pathname;
+	for (i = 0; i < routes.length; i++) {
+		route = routes[i];
+		if (route.pattern.test(path)) (route.handler)();
+	}
+}
+
+function isHubitat() {
+	return $('script[src$="hubitat.min.js"]').length > 0;
+}
+
 
 if (isHubitat()) dispatch();
