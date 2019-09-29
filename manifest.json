@@ -1,6 +1,6 @@
 {
 	"name": "Hubihud",
-	"version": "0.1",
+	"version": "0.2",
 	"description": "UI tweaks for Hubitat",
 	"manifest_version": 2,
 	"permissions": [
