@@ -52,7 +52,11 @@ function watchLogHeaders() {
 function sortLogHeaders() {
 	filters = $('#filters');
 	items = sortBy(filters, 'li', 'a');
+
+	all = filters.children('li').filter(function() { return $(this).text().trim() === 'All' });
+
 	filters.append(items);
+	filters.prepend(all);
 }
 
 function sortBy(parent, childSelector, keySelector) {
